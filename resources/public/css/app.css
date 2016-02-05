@@ -1,0 +1,151 @@
+body {
+  background-image: url('/img/bg.png');
+  background-repeat: repeat;
+}
+
+* {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-style: normal;
+	font-variant: normal;
+  -webkit-font-smoothing: antialiased;
+	font-weight: 500;
+  color: #eee;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  box-sizing: border-box;
+}
+
+.site-content-outer {
+  margin: 0 auto;
+  width: 980px;
+  padding-top: 20px;
+}
+
+.site-content-inner {}
+
+nav {
+  height: 60px;
+  line-height: 60px;
+  width: 100%;
+  background: #3d3d3d;
+}
+
+nav .site-title {
+  display: inline-block;
+  height: 100%;
+  font-size: 32px;
+  vertical-align: top;
+  margin-right: 100px;
+}
+
+nav .site-title a {
+  height: 100%;
+  display: block;
+  padding: 0 20px;
+}
+
+nav .site-title a:hover {
+  background: #fff;
+}
+
+nav ul {
+  list-style: none;
+  display: inline-block;
+}
+
+nav ul li {
+  display: inline-block;
+}
+
+nav ul li a {
+  height: 100%;
+  padding: 0 30px;
+  display: block;
+}
+
+nav ul li a:hover {
+  background: #fff;
+}
+
+.chat-wrapper {}
+
+.chat-wrapper .chat {}
+
+.chat-wrapper .chat .chat-messages {
+  display: inline-block;
+  vertical-align: top;
+  padding: 10px;
+  background: #3d3d3d;
+  border-radius: 4px;
+  width: 70%;
+}
+
+.chat-message {}
+
+.chat-timestamp {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.chat-timestamp:before {
+  content: "[";
+}
+
+.chat-timestamp:after {
+  content: "]";
+}
+
+.chat-user {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.chat-user a {
+  color: orange;
+}
+
+.chat-user:after {
+  content: ":";
+}
+
+.message-text {
+  display: inline-block;
+}
+
+.chat-wrapper .chat .chat-participants {
+  padding: 10px;
+}
+
+.sidebar {
+  border-radius: 4px;
+  margin-left: 1%;
+  display: inline-block;
+  vertical-align: top;
+  background: #3d3d3d;
+  width: 29%;
+}
+
+.opponent-finder {}
+
+.opponent-finder button {
+  background: orange;
+  border-radius: 4px;
+  margin: 0 auto;
+  padding: 20px 30px;
+  font-size: 24px;
+  display: block;
+  border: none;
+}
+
+.chat-participants ul {
+  list-style: none;
+}
+
+.chat-participants ul li span.user-country:after {
+  content: " - ";
+}
+
+.chat-participants ul li span.user-sublocation:after {
+  content: " - ";
+}
