@@ -20,4 +20,9 @@
 (register-sub
   :chat-participants
   (fn [db _]
-    (reaction (:participants (:chat @db)))))
+    (reaction (filter #(= false (:matchmaking? %)) (:users @db)))))
+
+(register-sub
+  :matchmaking-participants
+  (fn [db _]
+    (reaction (filter #(= true (:matchmaking? %)) (:users @db)))))

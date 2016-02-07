@@ -5,7 +5,11 @@
               [sf-ladder-ui.subs]
               [sf-ladder-ui.routes :as routes]
               [sf-ladder-ui.views :as views]
-              [sf-ladder-ui.config :as config]))
+              [sf-ladder-ui.config :as config]
+              [devtools.core :as devtools]))
+
+(devtools/enable-feature! :sanity-hints :dirac)
+(devtools/install!)
 
 (when config/debug?
   (println "dev mode"))
