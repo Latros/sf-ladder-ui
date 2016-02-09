@@ -27,6 +27,9 @@
   (defroute "/chat" []
     (re-frame/dispatch [:set-active-page :chat-page]))
 
+  (defroute "/login" []
+    (re-frame/dispatch [:set-active-page :login-page]))
+
 
   ;; --------------------
   (hook-browser-navigation!))

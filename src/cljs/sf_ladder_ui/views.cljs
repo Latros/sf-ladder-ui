@@ -1,14 +1,13 @@
 (ns sf-ladder-ui.views
     (:require [reagent.core :refer [atom]]
-              [re-frame.core :as re-frame :refer [subscribe dispatch]]))
+              [re-frame.core :as re-frame :refer [subscribe dispatch]]
+              [cljs-time.core :as t]
+              [cljs-time.format :as f]))
 
 (defn message-input [{:keys [message on-save classes]}]
-  (let [_ (.log js/console "Message passed to input:" message)
-        _ (.log js/console "On-Save passed to input:" on-save)
-        val (atom ":(")
+  (let [val (atom ":(")
         stop #(do (reset! val ""))
         save #(let [v (-> @val str clojure.string/trim)]
-                (.log js/console "WTF on-save" v)
                 (if-not (empty? v) (on-save v))
                 (stop))]
     (fn [props]
@@ -17,20 +16,26 @@
                       :value @val
                       :class classes
                       :on-change #(reset! val (.-value (.-target %)))
-                      :on-key-down #(do (.log js/console "WTF keydown" %)
-                                        (case (.-which %)
+                      :on-key-down #(do (case (.-which %)
                                           13 (save)
                                           27 (stop)
                                           nil))})])))
 
+(defn chat-timestamp [date]
+  (let [pretty-date (f/unparse (f/formatter "HH:mmA") date)]
+    (fn []
+      [:div {:class "chat-timestamp"} pretty-date])))
+
 (defn chat-message [message]
   (let [users (subscribe [:chat-participants])
+        user (subscribe [:logged-in-user])
+        all-users (conj @users @user)
         {:keys [timestamp user-id message]} message
-        [user] (filter #(= (:id %) user-id) @users)
-        {:keys [username country]} user]
+        [user] (filter #(= (:id %) user-id) all-users)
+        {:keys [username]} user]
     (fn []
       [:div {:class "chat-message"}
-        [:div {:class "chat-timestamp"} timestamp]
+        [chat-timestamp timestamp]
         [:div {:class "chat-user"}
           [:a {:href (str "#/user/" user-id)} username]]
         [:div {:class "message-text"} message]])))
@@ -50,7 +55,6 @@
     [:li {:class "participants-header"}
       [:span {:class "left-header"} "Username - W:L - ELO"]
       [:span {:class "right-header"} "Country/Region/Ping"]]))
-
 
 (defn user-ping [ping]
   (let [signal-quality (cond
@@ -119,6 +123,33 @@
         [:li
           [:a {:href "#/about"} "About"]]]]))
 
+(defn login-form []
+  (let [username (atom "")
+        password (atom "")
+        form-submit (.log js/console "Form submitted!")
+        stop #(do (reset! username "") (reset! password ""))]
+    (let []
+      (fn [props]
+        [:div {:class "login-form"}
+          [:div {:class "username"}
+            [:input (merge props
+                           {:type "text"
+                            :value @username
+                            :on-change #(reset! val (.-value (.-target %)))
+                            :on-key-down #(do (case (.-which %)
+                                                13 (form-submit)
+                                                27 (stop)
+                                                nil))})]]
+          [:div {:class "password"}
+            [:input (merge props
+                           {:type "password"
+                            :value @password
+                            :on-change #(reset! val (.-value (.-target %)))
+                            :on-key-down #(do (case (.-which %)
+                                                13 (form-submit)
+                                                27 (stop)
+                                                nil))})]]]))))
+
 (defn home-page []
   (fn []
     [:div {:class "home-wrapper"}
@@ -128,6 +159,12 @@
   (fn []
     [:div {:class "about-wrapper"}
       [:h1 "About"]]))
+
+(defn login-page []
+  (fn []
+    [:div {:class "login-wrapper"}
+     [:h1 "Login"]
+     [login-form]]))
 
 (defn chat-page []
   (fn []
@@ -141,6 +178,7 @@
 (defmethod pages :about-page [] [about-page])
 (defmethod pages :chat-page [] [chat-page])
 (defmethod pages :default [] [home-page])
+(defmethod pages :login-page [] [login-page])
 
 (defn wrapper []
   (let [active-page (subscribe [:active-page])]
