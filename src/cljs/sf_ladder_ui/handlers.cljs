@@ -11,19 +11,18 @@
 (register-handler
   :receive-message
   (fn [db [_ message]]
-    (let [messages (:messages db)]
-      db)))
+    (let [messages (conj (get-in db [:chat :messages]) message)]
+      (assoc db :chat {:messages messages}))))
 
 (register-handler
   :send-message
   (fn [db [_ message]]
-    (let [messages (:messages (:chat db))
-          user-id (get-in db [:user :id])
+    (let [user-id (get-in db [:user :id])
           now (time/now)
-          message {:message message :timestamp now :user-id user-id :id (random-uuid)}
-          messages (conj (get-in db [:chat :messages]) message)]
-     (assoc db :chat {:messages messages}))))
-
+          message {:message message :timestamp now :user-id user-id :id (random-uuid)}]
+      (re-frame/dispatch [:receive-message message]))
+    db))
+ 
 (register-handler
   :set-active-page
   (fn [db [_ active-page]]

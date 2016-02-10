@@ -9,14 +9,14 @@
   (= false (:matchmaking? user)))
 
 (register-sub
- :name
- (fn [db]
-   (reaction (:name @db))))
+  :name
+  (fn [db]
+    (reaction (:name @db))))
 
 (register-sub
- :active-page
- (fn [db _]
-   (reaction (:active-page @db))))
+  :active-page
+  (fn [db _]
+    (reaction (:active-page @db))))
 
 (register-sub
   :chat-messages

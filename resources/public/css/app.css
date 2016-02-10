@@ -115,7 +115,11 @@ nav ul li a:hover {
 }
 
 .login-wrapper {
-    
+    width: 400px;
+    background: #3D3D3D;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 3px;
 }
 
 .message-text {
