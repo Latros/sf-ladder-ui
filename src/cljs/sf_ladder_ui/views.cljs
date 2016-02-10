@@ -4,7 +4,7 @@
               [sf-ladder-ui.home.views :as home]
               [sf-ladder-ui.chat.views :as chat]
               [sf-ladder-ui.about.views :as about]
-              [sf-ladder-ui.login.views :as login]))
+              [sf-ladder-ui.login-register.views :as login]))
 
 (defmulti pages identity)
 (defmethod pages :home-page [] [home/home-page])

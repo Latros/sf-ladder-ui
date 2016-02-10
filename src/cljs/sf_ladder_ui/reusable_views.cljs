@@ -1,10 +1,6 @@
-(ns sf-ladder-ui.reusable-views
-    (:require [reagent.core :refer [atom]]
-              [re-frame.core :as re-frame :refer [subscribe dispatch]]
-              [cljs-time.core :as t]
-              [cljs-time.format :as f]
+(ns sf-ladder-ui.reusable-views)
 
-(defn generic-input [val on-enter wrapper-classes input-classes type]
+(defn generic-input [{:keys [val on-enter wrapper-classes input-classes type]}]
   (let []
     (fn [props]
       [:div {:class wrapper-classes}
