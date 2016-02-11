@@ -6,12 +6,6 @@
             [sf-ladder-ui.login-register.subs]
             [sf-ladder-ui.home.subs]))
 
-(defn matchmaking? [user]
-  (= true (:matchmaking? user)))
-
-(defn not-matchmaking? [user]
-  (= false (:matchmaking? user)))
-
 (register-sub
   :name
   (fn [db]
