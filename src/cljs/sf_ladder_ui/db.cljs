@@ -2,7 +2,7 @@
 
 (def app-state
   {:name "re-frame"
-   :user {:id 10 :username "Latros" :country "CA" :sublocation "NB" :w 500 :l 0 :rating 10000 :ping 0 :matchmaking? true}
+   :user nil
    :users [{:username "Matt"    :ping 252 :matchmaking? true  :id 4 :country "USA" :sublocation "NY" :w 20  :l 16  :rating 2355}
            {:username "Sam"     :ping 110 :matchmaking? false :id 5 :country "CA"  :sublocation "NB" :w 32  :l 31  :rating 1668}
            {:username "Jeff"    :ping 125 :matchmaking? false :id 6 :country "USA" :sublocation "FL" :w 155 :l 126 :rating 3201}

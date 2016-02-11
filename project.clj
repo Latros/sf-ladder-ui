@@ -5,6 +5,7 @@
                  [reagent "0.5.1"]
                  [re-frame "0.6.0"]
                  [secretary "1.2.3"]
+                 [cljs-ajax "0.5.3"]
                  [com.andrewmcveigh/cljs-time "0.4.0"]]
 
   :min-lein-version "2.5.3"

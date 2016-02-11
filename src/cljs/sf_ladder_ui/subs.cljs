@@ -1,6 +1,10 @@
 (ns sf-ladder-ui.subs
   (:require-macros [reagent.ratom :refer [reaction]])
-  (:require [re-frame.core :refer [register-sub]]))
+  (:require [re-frame.core :refer [register-sub]]
+            [sf-ladder-ui.chat.subs]
+            [sf-ladder-ui.about.subs]
+            [sf-ladder-ui.login-register.subs]
+            [sf-ladder-ui.home.subs]))
 
 (defn matchmaking? [user]
   (= true (:matchmaking? user)))
@@ -19,29 +23,6 @@
     (reaction (:active-page @db))))
 
 (register-sub
-  :chat-messages
-  (fn [db _]
-    (reaction (:messages (:chat @db)))))
-
-(register-sub
   :logged-in-user
   (fn [db _]
     (reaction (:user @db))))
-
-(register-sub
-  :chat-participants
-  (fn [db _]
-    (let [users (filter not-matchmaking? (:users @db))
-          user (:user @db)]
-      (if (:matchmaking? user)
-        (reaction users)
-        (reaction (conj users user))))))
-
-(register-sub
-  :matchmaking-participants
-  (fn [db _]
-    (let [users (filter matchmaking? (:users @db))
-          user (:user @db)]
-      (if (:matchmaking? user)
-        (reaction (conj users user))
-        (reaction users)))))

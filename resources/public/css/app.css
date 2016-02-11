@@ -122,6 +122,10 @@ nav ul li a:hover {
     border-radius: 3px;
 }
 
+.chat-message-input {
+  color: #000;
+}
+
 .message-text {
   display: inline-block;
 }

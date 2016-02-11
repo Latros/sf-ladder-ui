@@ -1,5 +1,5 @@
 (ns sf-ladder-ui.chat.views
-  (:require [re-frame.core :as re-frame :refer [subscribe]]
+  (:require [re-frame.core :as re-frame :refer [subscribe dispatch]]
             [cljs-time.format :as f]
             [sf-ladder-ui.reusable-views :as reusable]))
 
@@ -23,12 +23,20 @@
         [:div {:class "message-text"} message]])))
 
 (defn chat-messages []
-  (let [chat-messages (subscribe [:chat-messages])]
+  (let [chat-messages (subscribe [:chat-messages])
+        message-val ""
+        send-msg-fn #(do
+                       (.log js/console "SEND MSG FN" %)
+                       (dispatch [:send-message %]))]
     (fn []
       [:div {:class "chat-messages"}
         (for [message @chat-messages]
           ^{:key (:id message)} [chat-message message])
-        [reusable/generic-input]])))
+        [reusable/generic-input {:val message-val
+                                 :on-enter send-msg-fn
+                                 :wrapper-classes "chat-message-input-wrapper"
+                                 :input-classes "chat-message-input"
+                                 :type "text"}]])))
 
 (defn participants-header []
   (fn []
